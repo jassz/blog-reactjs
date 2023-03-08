@@ -6,8 +6,7 @@ import useSWR from 'swr'
 const baseURL = "https://dummyjson.com/"
 const response = (...args) => fetch(...args).then(res => res.json())
 
-export function getAll(endpoint:any) {
-    console.log('endpoint', endpoint);
+export function getStaffs(endpoint:any) {
     
 	const { data, error } = useSWR(`${baseURL}${endpoint}`, response)
 
@@ -19,7 +18,7 @@ export function getAll(endpoint:any) {
 }
 
 
-export function getOne(endpoint:any, params:any) {
+export function getOneStaff(endpoint:any, params:any) {
 	const { data, error } = useSWR(`${baseURL}${endpoint}/${params}`, response)
 
 	return{

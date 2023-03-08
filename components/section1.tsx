@@ -5,6 +5,9 @@ import Author from './_child/author';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {Autoplay} from 'swiper'
 import 'swiper/css';
+import {getAll} from '../lib/helper'
+import Spinner from './_child/spinner';
+import Error from './_child/error';
 
 export default function section1() {
 
@@ -12,48 +15,50 @@ export default function section1() {
 
     // const bg:Object
     let bg: Object = {
-        background: "url('images/banner.png')no-repeat",
-        backgroundPosition: "right"
+        background: "url('images/banner1.jpg')no-repeat  ",
+        backgroundSize: 'cover', 
     }
+
+    const { data, isLoading, isError } = getAll('quotes')
+    
+    if(isLoading)return <Spinner />
+    if(isError)return <Error />
+
     return (
         <section className='py-16' style={bg}>
-            <div className='container mx-auto md:px-20'>
-                <h1 className='font-bold text-4xl pb-12 text-center'>Trending</h1>
-            </div>
             <Swiper
                 slidesPerView={1}
                 loop={true}
                 autoplay={{delay:2000}}
             >
-                <SwiperSlide>{Slide() }</SwiperSlide>
-                <SwiperSlide>{Slide() }</SwiperSlide>
-                <SwiperSlide>{Slide() }</SwiperSlide>
-                <SwiperSlide>{Slide() }</SwiperSlide>
+                 {
+                    data.quotes.map(( quote:any, index:any ) => (
+                        <SwiperSlide>{Slide(quote) }</SwiperSlide>
+                    ))
+                }
             </Swiper>
         </section>
     )
 }
 
-function Slide() {
+function Slide(value: any) {
     return (
-        <div className='grid md:grid-cols-2'>
-            <div className='image'>
-                <Link href={"/"}>
-                    <Image src={"/images/img1.jpg"} alt="image" width={600} height={600} />
-                </Link>
+        <div className='grid md:grid-cols-3'>
+            <div>
             </div>
+            <div></div>
             <div className='info flex justify-center flex-col p-3'>
                 <div className='cat'>
-                    <Link href={"/"}><span className='text-orange-600 hover:text-orange-800'>Business Travel</span></Link>
-                    <Link href={"/"}><span className='text-gray-800 hover:text-gray-600'>-July 3, 2023</span></Link>
+                    <Link href={"/"}><span className='text-orange-600 hover:text-orange-800'>{value.author}</span></Link>
+                    <Link href={"/"}><span className='text-gray-800 hover:text-gray-600'>-March 7, 2023</span></Link>
                 </div>
                 <div className='title'>
-                    <Link href={"/"}><span className='text-xl md:text-3xl font-bold text-gray-800 hover:text-gray-600'>Your most unhappy customers are your greatest source of learning</span></Link>
+                    <Link href={"/"}><span className='text-xl md:text-3xl font-bold text-gray-800 hover:text-gray-600'>{value.quote}</span></Link>
                 </div>
-                <p className='text-gray-500 py-3'>
+                {/* <p className='text-gray-500 py-3'>
                     Unhappy customers can provide valuable feedback and insight for a business to improve its products or services. By listening to and addressing the complaints and concerns of dissatisfied customers, a company can learn what needs to be changed or improved to better meet the needs of its customers and ultimately improve its overall performance.
-                </p>
-                <Author />
+                </p> */}
+                {/* <Author /> */}
             
             </div>
         </div>

@@ -1,50 +1,46 @@
 import * as React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-// import Author from './_child/author';
-import {getAll} from '../lib/helper'
-import Spinner from './_child/spinner';
-import Error from './_child/error';
+import Link from 'next/link'
+import {getAll} from '../../../lib/helper';
+import Spinner from '../../../components/_child/spinner';
+import Error from '../../../components/_child/error';
+import Format from '../../../layout/format';
 
-import {ImArrowRight2} from "react-icons/im"
 
-export default function section2() {
+export default function Listing() {
     const { data, isLoading, isError } = getAll('products')
-    
+
     if(isLoading)return <Spinner />
     if(isError)return <Error />
-    const products: string[] = data.products
 
+    const products = data.products
+    
     return (
+        <Format>
         <section className='container mx-auto md:px-20 py-10'>
-            <h1 className='font-bold text-4xl py-12 text-center'>Latest Products</h1>
-
+            <h1 className='font-bold text-4xl py-12 text-center'>Product Listing</h1>
             {/* grid column */}
-            <div className='grid md:grid-cols-3 lg:grid-cols-4 gap-5'>
+            <div className='grid md:grid-cols-3 lg:grid-cols-5 gap-4'>
+                
                 {
-                    products.slice(8, 16).map(( product:any, index:any ) => (
-                        <Post data={product} key={index} />
+                    products.map(( value:any, index:any ) => (
+                        <Product data={value} key={index} />
                     ))
                 }
             </div>
-
-            <div className='flex justify-end m-3 w-full'>
-                <Link href={"/products/listing" }>
-                    <span>View more</span> 
-                </Link>
-                <ImArrowRight2 className='ml-3 my-auto' />
-            </div>
         </section>
+        </Format>
     );
 }
 
-function Post(data: { data: { id: any; title: any; description: any; category: any; images: any; price: any; brand: any; }; }) {
+
+function Product(data: { data: { id: any; title: any; description: any; category: any; images: any; price: any; brand: any; }; }) {
     const {id, title, description, category, images, price, brand} = data.data
     
     return (
         <div className='item border-2 p-4 rounded-md border-gray-200 '>
             <div className='images h-full bg-white-100' style={{height: '20vh'}}>
-                <Link href={"/"}>
+                <Link href={`/products/${id}`}>
                     <Image src={images[0] || "/"} alt="image"  width={100} height={100} className="rounded flex flex-col justify-center mx-auto" />
                 </Link>
             </div>
@@ -64,6 +60,7 @@ function Post(data: { data: { id: any; title: any; description: any; category: a
                     {brand || "No subtitle"}
                 </p>
             </div>
+          
         </div>
     )
 }
