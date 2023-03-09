@@ -37,27 +37,8 @@ function Product(data: { id: any; title: any; description: any; category: any; i
 
     return (
         <div className='grid mr-5 card'>
-            <div className='flex justify-end'>
-                <Link href={`/products/edit/${id}`}>
-                <button className='text-sm border-2 bg-yellow-400 w-auto px-5 py-1 rounded-lg'>Edit</button>
-                </Link>
-            </div>
-            
-            <div className='images'>
-                <Swiper
-                    slidesPerView={1}
-                    loop={true}
-                    autoplay={{ delay: 2000 }}
-                >
-                    {
-                        images.map((image: any, index: any) => (
-                            <SwiperSlide key={index}>
-                                <Image src={image} alt="image" width={300} height={300} className="mx-auto" />
-                            </SwiperSlide>
-                        ))
-                    }
-
-                </Swiper>
+            <div className='images mx-auto min-w-min' style={{height: '20vh', width: '20vh'}}>
+                <Image src={images[0]} alt="image" width={100} height={100} className="mx-auto" />
             </div>
             <div className='info flex justify-center flex-col py-4'>
                 <div className='cat flex justify-between'>

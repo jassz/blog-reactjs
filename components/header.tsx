@@ -11,8 +11,8 @@ export default function header() {
                     <Link href={"/products/listing"}>
                         <span>Products</span>
                     </Link>
-                    <Link href={"/staff/listing"}>
-                        <span>Staffs</span>
+                    <Link href={"/user/listing"}>
+                        <span>Users</span>
                     </Link>
                     </div>
                     {/* <input type="text" className="mt-1 block w-60 px-3 py-2 bg-white border-slate-300 rounded-full text-sm shadow-sm placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="search..."></input> */}
